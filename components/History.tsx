@@ -9,10 +9,10 @@ const History = () => {
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
     setSearchHistory(history);
-  });
+  }, []);
   return (
     <div className="flex justify-center flex-col items-center">
-      <Link href="/main">
+      <Link href="/">
         <button>Main Page</button>
       </Link>
       <div className="flex flex-col">

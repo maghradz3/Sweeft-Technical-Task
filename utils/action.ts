@@ -1,7 +1,7 @@
 "use server";
 
 import axios from "axios";
-import { UnsplashImageResponse } from "./interfaces";
+import { DetailedImage, UnsplashImageResponse } from "./interfaces";
 
 export const getPopularImages = async ({
   pageParam = 1,
@@ -24,4 +24,19 @@ export const getPopularImages = async ({
   );
 
   return { ...data, prevOffset: pageParam };
+};
+
+export const getDetailedImage = async (
+  id: string | null
+): Promise<DetailedImage> => {
+  const { data } = await axios.get<DetailedImage>(
+    `https://api.unsplash.com/photos/${id}`,
+    {
+      headers: {
+        Authorization: `Client-ID ${process.env.NEXT_UNSPLASH_ACCESS_KEY}`,
+      },
+    }
+  );
+  console.log(data);
+  return data;
 };

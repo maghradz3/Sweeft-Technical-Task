@@ -10,13 +10,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const Main = () => {
-  //   const router = useRouter();
   const params = useSearchParams();
   const search = params.get("search");
-  console.log(params);
-  //   const {
-  //     query: { search },
-  //   } = router;
+
   const loadMoreRef = useRef(null);
 
   const [searchTerm, setSearchTerm] = React.useState(search || "");
@@ -77,7 +73,7 @@ const Main = () => {
       }
     };
   }, [hasNextPage, fetchNextPage]);
-  console.log(data);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {error.message}</div>;
 
@@ -86,23 +82,24 @@ const Main = () => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  console.log(searchTerm);
 
   return (
     <div className=" flex flex-col justify-center items-center ">
-      <div className="flex justify-center items-center gap-4 p-3">
-        <input
-          className="w-[600px] h-15 p-3 border border-slate-600 bg-slate-600 text-white placeholder:text-white rounded-md"
-          onChange={onChangeHandler}
-          name="search"
-          type="text"
-          value={searchTerm}
-          placeholder="Search"
-        />
+      <div className=" flex items-center justify-between p-3  border-b w-full ">
+        <div className="flex-grow flex justify-center">
+          <input
+            className="w-[200px] sm:w-[200px] md:w-[400px] lg:w-[600px] h-15 p-3 border border-gray-300 bg-slate-500 text-white placeholder:text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+            onChange={onChangeHandler}
+            name="search"
+            type="text"
+            value={searchTerm}
+            placeholder="Search"
+          />
+        </div>
 
         <Link
           href="/history"
-          className="flex justify-center items-center p-5 w-40 h-12 rounded-md  bg-slate-600 text-white hover:bg-slate-800"
+          className="flex justify-center items-center px-3 md:px-6 py-1 w-auto h-auto rounded-lg bg-blue-500 text-white hover:bg-blue-700 transition-colors duration-300 ease-in-out shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105"
         >
           History
         </Link>
