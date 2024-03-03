@@ -39,7 +39,7 @@ const ImageCard = ({ image }: ImageCardProps) => {
 
   return (
     <>
-      <Tilt options={defaultOptions} style={{ height: 250, width: 250 }}>
+      <Tilt options={defaultOptions} style={{ height: 270, width: 300 }}>
         <div className="w-[300px] h-[250px] border border-gray-200 rounded-lg overflow-hidden shadow-lg transition-shadow hover:shadow-xl cursor-pointer">
           <div
             className="w-full h-[200px] flex justify-center items-center relative overflow-hidden"
