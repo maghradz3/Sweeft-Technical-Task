@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import ImageCards from "./ImageCards";
 import { UnsplashImage, UnsplashImageResponse } from "@/utils/interfaces";
+import { Suspense } from "react";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 // import { useRouter } from "next/router";
@@ -84,29 +85,31 @@ const Main = () => {
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center ">
-      <div className=" flex items-center justify-between p-3  border-b w-full ">
-        <div className="flex-grow flex justify-center">
-          <input
-            className="w-[200px] sm:w-[200px] md:w-[400px] lg:w-[600px] h-15 p-3 border border-gray-300 bg-slate-500 text-white placeholder:text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
-            onChange={onChangeHandler}
-            name="search"
-            type="text"
-            value={searchTerm}
-            placeholder="Search"
-          />
-        </div>
+    <Suspense>
+      <div className=" flex flex-col justify-center items-center ">
+        <div className=" flex items-center justify-between p-3  border-b w-full ">
+          <div className="flex-grow flex justify-center">
+            <input
+              className="w-[200px] sm:w-[200px] md:w-[400px] lg:w-[600px] h-15 p-3 border border-gray-300 bg-slate-500 text-white placeholder:text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+              onChange={onChangeHandler}
+              name="search"
+              type="text"
+              value={searchTerm}
+              placeholder="Search"
+            />
+          </div>
 
-        <Link
-          href="/history"
-          className="flex justify-center items-center px-3 md:px-6 py-1 w-auto h-auto rounded-lg bg-blue-500 text-white hover:bg-blue-700 transition-colors duration-300 ease-in-out shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105"
-        >
-          History
-        </Link>
+          <Link
+            href="/history"
+            className="flex justify-center items-center px-3 md:px-6 py-1 w-auto h-auto rounded-lg bg-blue-500 text-white hover:bg-blue-700 transition-colors duration-300 ease-in-out shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105"
+          >
+            History
+          </Link>
+        </div>
+        <ImageCards data={images} />
+        <div ref={loadMoreRef} style={{ height: 20 }} />
       </div>
-      <ImageCards data={images} />
-      <div ref={loadMoreRef} style={{ height: 20 }} />
-    </div>
+    </Suspense>
   );
 };
 

@@ -20,7 +20,7 @@ const History = () => {
           return (
             <Link
               key={historyItem}
-              href={`/?search=${encodeURIComponent(historyItem)}`}
+              href={`/?search=${encodeURIComponent(historyItem)}` || "/"}
             >
               {historyItem}
             </Link>
