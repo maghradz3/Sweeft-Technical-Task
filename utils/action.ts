@@ -1,7 +1,11 @@
 "use server";
 
 import axios from "axios";
-import { DetailedImage, UnsplashImageResponse } from "./interfaces";
+import {
+  DetailedImage,
+  DetailedImageStatistic,
+  UnsplashImageResponse,
+} from "./interfaces";
 
 export const getPopularImages = async ({
   pageParam = 1,
@@ -11,7 +15,7 @@ export const getPopularImages = async ({
   searchTerm: string | null;
 }): Promise<UnsplashImageResponse> => {
   const query = searchTerm ? searchTerm : "popular";
-  console.log("aeeee", searchTerm);
+
   const { data } = await axios.get<UnsplashImageResponse>(
     `https://api.unsplash.com/search/photos?page=${pageParam}&query=${encodeURIComponent(
       query
@@ -31,7 +35,15 @@ export const getPopularImages = async ({
 
 export const getDetailedImage = async (
   id: string | null
-): Promise<DetailedImage> => {
+): Promise<[DetailedImage, DetailedImageStatistic]> => {
+  const { data: statistic } = await axios.get<DetailedImageStatistic>(
+    `https://api.unsplash.com/photos/${id}/statistics`,
+    {
+      headers: {
+        Authorization: `Client-ID ${process.env.NEXT_UNSPLASH_ACCESS_KEY}`,
+      },
+    }
+  );
   const { data } = await axios.get<DetailedImage>(
     `https://api.unsplash.com/photos/${id}`,
     {
@@ -44,5 +56,5 @@ export const getDetailedImage = async (
     throw new Error("Image not found");
   }
 
-  return data;
+  return [data, statistic];
 };

@@ -1,12 +1,12 @@
-import { DetailedImage } from "@/utils/interfaces";
+import { DetailedImage, DetailedImageStatistic } from "@/utils/interfaces";
 import React, { useEffect, useRef } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { PiDownloadSimpleBold } from "react-icons/pi";
 import { BiSolidLike } from "react-icons/bi";
-import { BiSolidAdjust } from "react-icons/bi";
+import { FaRegEye } from "react-icons/fa";
 
 interface ModalProps {
-  image: DetailedImage;
+  image: [DetailedImage, DetailedImageStatistic];
   onClose: () => void;
 }
 
@@ -40,25 +40,25 @@ const Modal = ({ image, onClose }: ModalProps) => {
           <IoCloseSharp className="w-5 h-5 text-red-500" />
         </button>
 
-        <img src={image.urls.raw} alt={image.description} />
+        <img src={image[0].urls.raw} alt={image[0].description} />
         <div className="flex justify-center items-center gap-10">
           <h2 className="text-lg font-bold flex justify-center items-center gap-1">
             <span className="text-gray-500 ">
               <PiDownloadSimpleBold />
             </span>
-            {image.downloads || "Image Details"}
+            {image[1].downloads.total || "Image Details"}
           </h2>
           <h2 className="text-lg font-bold flex justify-center items-center gap-4">
             <span className="text-gray-500">
               <BiSolidLike />
             </span>
-            {image.likes || "Image Details"}
+            {image[0].likes || "Image Details"}
           </h2>
           <h2 className="text-lg font-bold flex justify-center items-center gap-4">
             <span className="text-gray-500">
-              <BiSolidAdjust />
+              <FaRegEye />
             </span>
-            {image.exif.iso || ""}
+            {image[1].views.total || ""}
           </h2>
         </div>
       </div>

@@ -1,5 +1,9 @@
 import { getDetailedImage } from "@/utils/action";
-import { DetailedImage, UnsplashImage } from "@/utils/interfaces";
+import {
+  DetailedImage,
+  DetailedImageStatistic,
+  UnsplashImage,
+} from "@/utils/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -14,7 +18,10 @@ const ImageCard = ({ image }: ImageCardProps) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
 
-  const { data: detailedImage, isSuccess } = useQuery<DetailedImage, Error>({
+  const { data: detailedImage, isSuccess } = useQuery<
+    [DetailedImage, DetailedImageStatistic],
+    Error
+  >({
     queryKey: ["detailedImage", selectedImageId],
     queryFn: () => getDetailedImage(selectedImageId),
     enabled: !!selectedImageId,
