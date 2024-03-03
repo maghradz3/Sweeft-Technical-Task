@@ -3,19 +3,25 @@
 import axios from "axios";
 import { UnsplashImageResponse } from "./interfaces";
 
-export const getPopularImages = async (
-  pageParam = 1
-): Promise<UnsplashImageResponse> => {
+export const getPopularImages = async ({
+  pageParam = 1,
+  searchTerm = "",
+}: {
+  pageParam: number;
+  searchTerm: string | null;
+}): Promise<UnsplashImageResponse> => {
+  const query = searchTerm ? searchTerm : "popular";
+  console.log("aeeee", searchTerm);
   const { data } = await axios.get<UnsplashImageResponse>(
-    `https://api.unsplash.com/search/photos?page=${pageParam}&query=""&per_page=20&order_by=popular`,
+    `https://api.unsplash.com/search/photos?page=${pageParam}&query=${encodeURIComponent(
+      query
+    )}&per_page=20&order_by=popular`,
     {
       headers: {
         Authorization: `Client-ID ${process.env.NEXT_UNSPLASH_ACCESS_KEY}`,
       },
     }
   );
-  console.log("shemovida");
-  console.log(data);
+
   return { ...data, prevOffset: pageParam };
-  //   return data;
 };

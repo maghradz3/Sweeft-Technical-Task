@@ -1,7 +1,11 @@
 import React from "react";
 
-const SearchBar = () => {
-  return <div>SearchBar</div>;
+const SearchBar = ({}) => {
+  return (
+    <form>
+      <input type="text" name="search" />
+    </form>
+  );
 };
 
 export default SearchBar;

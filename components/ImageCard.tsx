@@ -15,7 +15,7 @@ const ImageCard = ({ image }: ImageCardProps) => {
           priority
           //   objectFit="cover"
           //   objectPosition="center"
-          src={image.urls.full}
+          src={image.urls.small}
           alt="image link"
           width={300}
           height={100}

@@ -11,8 +11,9 @@ export default async function HomePage() {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["popularImages"],
-    queryFn: () => getPopularImages(1),
+    queryFn: () => getPopularImages({ pageParam: 1, searchTerm: null }),
     initialPageParam: 1,
+
     getNextPageParam: (
       lastPage: { total_pages: number },
       pages: string | any[]
