@@ -5,6 +5,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 export default async function HomePage() {
   const queryClient = new QueryClient();
@@ -28,8 +29,10 @@ export default async function HomePage() {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Main />
-    </HydrationBoundary>
+    <Suspense fallback="loading">
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Main />
+      </HydrationBoundary>
+    </Suspense>
   );
 }
