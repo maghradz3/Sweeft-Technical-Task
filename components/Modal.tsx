@@ -40,7 +40,7 @@ const Modal = ({ image, onClose }: ModalProps) => {
           <IoCloseSharp className="w-5 h-5 text-red-500" />
         </button>
 
-        <img src={image.urls.regular} alt={image.description} />
+        <img src={image.urls.raw} alt={image.description} />
         <div className="flex justify-center items-center gap-10">
           <h2 className="text-lg font-bold flex justify-center items-center gap-1">
             <span className="text-gray-500 ">

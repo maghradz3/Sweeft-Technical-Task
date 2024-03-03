@@ -3,13 +3,16 @@ import { getPopularImages } from "@/utils/action";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import ImageCards from "./ImageCards";
-import { UnsplashImage, UnsplashImageResponse } from "@/utils/interfaces";
+import { UnsplashImageResponse } from "@/utils/interfaces";
 import { Suspense } from "react";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
-import { useSearchParams } from "next/navigation";
 
+import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/utils/variants";
+import ErrorMessage from "./ErrorMessage";
+import Loading from "./Loading";
 const Main = () => {
   const params = useSearchParams();
   const search = params.get("search");
@@ -75,8 +78,8 @@ const Main = () => {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorMessage />;
 
   const images = data?.pages.flatMap((page) => page.results);
 
@@ -87,15 +90,21 @@ const Main = () => {
   return (
     <Suspense>
       <div className=" flex flex-col justify-center items-center ">
-        <div className=" flex items-center justify-between p-3  border-b w-full ">
+        <motion.div
+          variants={fadeIn("down", 0.2)}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          className=" flex items-center justify-between p-3  border-b w-full "
+        >
           <div className="flex-grow flex justify-center">
             <input
-              className="w-[200px] sm:w-[200px] md:w-[400px] lg:w-[600px] h-15 p-3 border border-gray-300 bg-slate-500 text-white placeholder:text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+              className="w-[200px] sm:w-[200px] md:w-[400px] lg:w-[600px] h-15 p-3 border border-gray-300 bg-slate-500 text-white placeholder:text-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
               onChange={onChangeHandler}
               name="search"
               type="text"
               value={searchTerm}
-              placeholder="Search"
+              placeholder="Search for your desired topic.."
             />
           </div>
 
@@ -105,7 +114,7 @@ const Main = () => {
           >
             History
           </Link>
-        </div>
+        </motion.div>
         <ImageCards data={images} />
         <div ref={loadMoreRef} style={{ height: 20 }} />
       </div>

@@ -22,6 +22,9 @@ export const getPopularImages = async ({
       },
     }
   );
+  if (!data) {
+    throw new Error("Images not found");
+  }
 
   return { ...data, prevOffset: pageParam };
 };
@@ -37,6 +40,9 @@ export const getDetailedImage = async (
       },
     }
   );
-  console.log(data);
+  if (!data) {
+    throw new Error("Image not found");
+  }
+
   return data;
 };

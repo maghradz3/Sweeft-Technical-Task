@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import { getPopularImages } from "@/utils/action";
 import {
@@ -29,7 +30,7 @@ export default async function HomePage() {
   });
 
   return (
-    <Suspense fallback="loading">
+    <Suspense fallback={<Loading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Main />
       </HydrationBoundary>
